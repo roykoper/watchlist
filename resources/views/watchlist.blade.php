@@ -19,7 +19,8 @@
             <td>{{$movie->name}}</td>
             <td>{{$movie->year}}</td>
             <td>{{$movie->genre}}</td>
-            <td><a href="/watchlist/editmovie">Edit</a></td>
+            <td><a href="/watchlist/editmovie/{{ $movie->id }}">Edit</a></td>
+            <td><a href="/watchlist/deletemovie/{{ $movie->id }}">Delete</a></td>
         </tr>
     @endforeach 
 </table>

@@ -26,10 +26,12 @@ Route::get('/watchlist/addmovie', function () {
     return view('watchlist/addmovie');
 });
 
-//Route::get('/watchlist/addmovie', 'WatchlistController@addmovie')->name('addmovie');
+Route::get('/watchlist/editmovie/{id}', 'WatchlistController@editmovie')->name('editmovie');
 
 Route::post('/watchlist', 'WatchlistController@storemovie')->name('storemovie');
 
+Route::post('/watchlist/updatemovie', 'WatchlistController@updatemovie')->name('updatemovie');
+
 Route::put('/watchlist', 'WatchlistController@putmovie')->name('putmovie');
 
-Route::delete('/watchlist', 'WatchlistController@deletemovie')->name('deletemovie');
+Route::delete('/watchlist/{id}', 'WatchlistController@deletemovie')->name('deletemovie');

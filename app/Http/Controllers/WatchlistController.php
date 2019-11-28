@@ -11,8 +11,8 @@ class WatchlistController extends Controller
     {
         $movies = Movie::all();
 
-        return view('watchlist', ['movies' => $movies]);
-    }
+        return view('watchlist', ['movies' => $movies] );
+    }    
 
     public function storeMovie()
     {
@@ -27,10 +27,32 @@ class WatchlistController extends Controller
         return redirect('/watchlist');
     }
 
-    public function putMovie()
+    //edit
+    public function editMovie($movieId) 
     {
-        $movie = Movie::where('id', request('id'));
+        $movie = Movie::where('id', $movieId)->first();
 
-        return view('/watchlist/editmovie', ['movie' => $movie]);
+        if($movie == null)
+            return;
+
+        return view('watchlist/editmovie', ['movie' => $movie]);
+    }
+
+    public function updateMovie()
+    {
+        Movie::where('id', request('id'))->update(
+            ['name' => request('name')],
+            ['year' => request('year')],
+            ['genre' => request('genre')]
+        );
+
+        return redirect('/watchlist');
+    }    
+
+    public function deleteMovie($movieId)
+    {
+        Movie::where('id', $movieId)->delete();
+
+        return redirect('/watchlist');
     }
 }
