@@ -2,34 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Movie;
+use App\Watchlist;
+use Auth;
 
 class WatchlistController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function index() 
     {
-        $movies = Movie::all();
+        $watchlist = Watchlist::where('user_id', Auth::id())->with('movies')->first();
 
-        return view('watchlist', ['movies' => $movies] );
-    }    
+        return view('watchlist.watchlist', compact('watchlist'));
+    }
 
     public function storeMovie()
     {
         $movie = new Movie();
 
+        $movie->watchlist_id = Watchlist::where('user_id', Auth::id())->first()->id;
         $movie->name = request('name');
         $movie->year = request('year');
         $movie->genre = request('genre');
 
         $movie->save();
 
-        return redirect('/watchlist');
+        return redirect()->route('watchlist');
     }
 
     //edit
@@ -51,13 +53,13 @@ class WatchlistController extends Controller
             ['genre' => request('genre')]
         );
 
-        return redirect('/watchlist');
+        return redirect()->back();
     }    
 
     public function deleteMovie($movieId)
     {
-        Movie::where('id', $movieId)->delete();
+        Movie::find($movieId)->delete();
 
-        return redirect('/watchlist');
+        return redirect()->back();
     }
 }
