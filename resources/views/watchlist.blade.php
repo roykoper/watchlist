@@ -19,8 +19,12 @@
             <td>{{$movie->name}}</td>
             <td>{{$movie->year}}</td>
             <td>{{$movie->genre}}</td>
-            <td><a href="/watchlist/editmovie/{{ $movie->id }}">Edit</a></td>
-            <td><a href="/watchlist/deletemovie/{{ $movie->id }}">Delete</a></td>
+            <td><a href="/watchlist/editmovie/{{ $movie->id }}"><img src="/images/pencil-edit-icon.png"></a></td>
+            <form method="post" action="/watchlist/{{ $movie->id }}">
+            @csrf
+            @method('DELETE')
+                <td><input type="image" src="/images/delete-icon.png" value="Delete"/></td>
+            </form>
         </tr>
     @endforeach 
 </table>
